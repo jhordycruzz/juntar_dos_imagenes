@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        #uploadContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #inputImage1, #inputImage2 {
+            margin: 0 10px;
+            padding: 10px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #container {
+            position: relative;
+            border: 10px solid #fff;
+            width: max-content;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .imageDiv {
+            position: relative;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+
+<div id="uploadContainer">
+    <input type="file" id="inputImage1">
+    <input type="file" id="inputImage2">
+</div>
+
+<div id="container"></div>
+<input type="range" id="sliderX" min="-400" max="400">
+<input type="range" id="sliderY" min="-300" max="300"> 
+
+<script>
+var container = document.getElementById("container");
+var img1 = document.createElement("img");
+var img2 = document.createElement("img");
+var image1 = document.createElement("div");
+var image2 = document.createElement("div");
+
+image1.className = image2.className = "imageDiv";
+
+image1.appendChild(img1);
+image2.appendChild(img2);
+
+container.appendChild(image1);
+container.appendChild(image2);
+
+// URL de imagen predeterminada
+img1.src = "01.jpeg";
+img2.src = "02.jpeg";
+
+var inputImage1 = document.getElementById("inputImage1");
+inputImage1.addEventListener("change", function() {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        img1.src = e.target.result;
+    };
+    reader.readAsDataURL(this.files[0]);
+});
+
+var inputImage2 = document.getElementById("inputImage2");
+inputImage2.addEventListener("change", function() {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        img2.src = e.target.result;
+    };
+    reader.readAsDataURL(this.files[0]);
+});
+
+var sliderX = document.getElementById("sliderX");
+sliderX.oninput = function() {
+    img2.style.left = this.value + 'px';
+};
+
+var sliderY = document.getElementById("sliderY");
+sliderY.oninput = function() {
+    img2.style.top = this.value + 'px';
+};
+</script>
+
+</body>
+</html>
